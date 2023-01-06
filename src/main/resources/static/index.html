@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <title>Spring Boot - AngularJs App</title>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+
+<div class="container" ng-controller="productController">
+    <h1>List of products</h1>
+
+    <form novalidate ng-submit="filterPrice()" style="width: 50%">
+        <div>
+            <div class="row">
+                <div class="col-sm">
+                    Min price:
+                    <input class="form-control" type="number" value="0" ng-model="minPrice">
+                </div>
+                <div class="col-sm">
+                    Max price:
+                    <input class="form-control" type="number" value="10" ng-model="maxPrice">
+                </div>
+                <p></p>
+                <div class="col-sm">
+                    Name:
+                    <input class="form-control" type="text" value="10" ng-model="namePart">
+                    <p></p>
+                </div>
+                <div class="col-sm">
+                    Page number:
+                    <input class="form-control" type="number" value="1" ng-model="p">
+                    <p></p>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 200px">Filter</button>
+            <p></p>
+        </div>
+    </form>
+
+    <table class="table table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Actions</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in productList">
+            <td style="width:20%">{{p.id}}</td>
+            <td style="width:30%">{{p.name}}</td>
+            <td style="width:20%">{{p.price}}</td>
+            <td style="width:30%">
+                <button class="btn btn-primary" ng-click="addToCart(p.id, p.name, p.price)">Add to cart</button>
+                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h3 style="text-align: right">Page {{pageNumber}} of {{totalPages}} </h3>
+
+    <h1>Cart</h1>
+    <table class="table table-hover">
+        <tr>
+            <td>Product ID</td>
+            <td>Name</td>
+            <td>Amount</td>
+            <td>Total price</td>
+            <td>Actions</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="o in orderList">
+            <td style="width:20%">{{o.productId}}</td>
+            <td style="width:30%">{{o.name}}</td>
+            <td style="width:10%">
+                <button class="btn btn-primary" ng-click="addOne(o.productId)">+</button>
+                {{o.amount}}
+                <button class="btn btn-danger" ng-click="removeOne(o.productId)">-</button>
+            </td>
+            <td style="width:20%">{{o.total}}</td>
+            <td style="width:20%">
+                <button class="btn btn-danger" ng-click="deleteOrder(o.productId)">Remove</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </br>
+    </br>
+</div>
+
+</body>
+</html>
